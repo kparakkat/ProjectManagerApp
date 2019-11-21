@@ -1,0 +1,13 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<nav class='navbar navbar-expand navbar-light bg-light'>
+  <h3 class='navbar-brand'> {{pageTitle}}</h3> <p></p>
+  <ul class='nav nav-pills'>
+    <li><a class='nav-link' [routerLink]="['/welcome']">Add Project</a></li>
+    <li><a class='nav-link' [routerLink]="['/products']">Add Task</a></li>
+    <li><a class='nav-link' [routerLink]="['/manageuser']">Add User</a></li>
+    <li><a class='nav-link' [routerLink]="['/products']">View Task</a></li>
+  </ul>
+</nav>
+<div class='container'>
+  <router-outlet></router-outlet>
+</div>
