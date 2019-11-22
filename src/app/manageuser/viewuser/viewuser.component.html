@@ -1,0 +1,41 @@
+<div class='card'>
+  <!-- <div class='card-header'>
+    Filter
+  </div> -->
+  <div class='card-body'>
+    <div class='row'>
+        <div class='col-md-12'>
+            <input type='text' 
+              [(ngModel)]='searchText'/>
+              Sort:
+              <button type="button" style="width:130px" class="btn btn-success" (click)="sort('FirstName')">First Name</button>
+              <button type="button" style="width:130px;margin-left: 1px;" class="btn btn-success" (click)="sort('LastName')">Last Name</button>
+              <button type="button" style="width:100px;margin-left: 1px;" class="btn btn-success" (click)="sort('Id')">Id</button>
+        </div>
+    </div>
+    <div class='table-responsive'>
+        <table class='table'
+        *ngIf='users && users.length'>
+          <thead>
+              <tr>
+                  <th>First Name</th>
+                  <th>Last Name</th>
+                  <th>Employee Id</th>
+                  <th></th>
+                  <th></th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr *ngFor='let user of filteredUsers'>
+                  <td>{{ user.firstname }}</td>
+                  <td>{{ user.lastname }}</td>
+                  <td>{{ user.employeeid }}</td>
+                  <td><button type="button" style="width:100px;" class="btn btn-success" (click)="editUser()">Edit</button></td>
+                  <td><button type="button" style="width:100px;" class="btn btn-success" (click)="deleteUser()">Delete</button></td>
+              </tr>
+          </tbody>
+        </table>
+    </div>
+  </div>
+
+</div>

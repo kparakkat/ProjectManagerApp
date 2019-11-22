@@ -22,10 +22,14 @@ export class UserService {
   getUserById(userId: number) : Observable<User> {
     return this.makeRequest(`getById/${userId}`);
   }
+
+  getAllUsers() : Observable<User[]> {
+    return this.makeRequest(`all`);
+  }
   
-  private makeRequest(path: string): Observable<User> {
+  private makeRequest(path: string): Observable<any> {
     let url = `http://localhost:9092/user/${path}`;
-    return this.httpClient.get<User>(url);
+    return this.httpClient.get<any>(url);
   }
 
   addUser(user: User): Observable<ResultData>{
