@@ -30,8 +30,8 @@
                   <td>{{ user.firstname }}</td>
                   <td>{{ user.lastname }}</td>
                   <td>{{ user.employeeid }}</td>
-                  <td><button type="button" style="width:100px;" class="btn btn-success" (click)="editUser()">Edit</button></td>
-                  <td><button type="button" style="width:100px;" class="btn btn-success" (click)="deleteUser()">Delete</button></td>
+                  <td><button type="button" style="width:100px;" class="btn btn-success" (click)="onEditUser(user.userid)">Edit</button></td>
+                  <td><button type="button" style="width:100px;" class="btn btn-success" (click)="onDeleteUser(user.userid)">Delete</button></td>
               </tr>
           </tbody>
         </table>

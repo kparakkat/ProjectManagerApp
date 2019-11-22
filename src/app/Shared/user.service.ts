@@ -20,11 +20,11 @@ export class UserService {
   constructor(private httpClient: HttpClient) { }
 
   getUserById(userId: number) : Observable<User> {
-    return this.makeRequest(`getById/${userId}`);
+    return this.makeRequest(`getByUserId/${userId}`);
   }
 
   getAllUsers() : Observable<User[]> {
-    return this.makeRequest(`all`);
+    return this.makeRequest(`getAllUsers`);
   }
   
   private makeRequest(path: string): Observable<any> {
@@ -36,6 +36,18 @@ export class UserService {
     let url = `http://localhost:9092/user/addUser`;
     // return this.httpClient.post<User>(url, user, this.httpOptions);
     return this.httpClient.post<ResultData>(url, user, this.httpOptions).pipe(
+        catchError(this.handleError));
+  }
+
+  editUser(user: User): Observable<ResultData>{
+    let url = `http://localhost:9092/user/updateUser`;
+    return this.httpClient.put<ResultData>(url, user, this.httpOptions).pipe(
+        catchError(this.handleError));
+  }
+
+  deleteUser(userId: Number): Observable<ResultData>{
+    let url = `http://localhost:9092/user/deleteUser/${userId}`;
+    return this.httpClient.delete<ResultData>(url).pipe(
         catchError(this.handleError));
   }
 

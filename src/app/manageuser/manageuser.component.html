@@ -1,8 +1,8 @@
 <div class="container">
   <div class="row">
-    <app-adduser></app-adduser>
+    <app-adduser (savedUser)='onSavedUser($event)' #addUser></app-adduser>
   </div>
   <div class="row">
-      <app-viewuser></app-viewuser>
+      <app-viewuser (editUser)='onEditUser($event)' #viewUser></app-viewuser>
   </div>
 </div>

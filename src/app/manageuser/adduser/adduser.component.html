@@ -8,7 +8,7 @@
                 <label for="firstname">First Name</label>
                 <input type="text" class="form-control" id="firstname" required
                   [(ngModel)]="model.firstname" name="firstname" #firstname="ngModel" (change)="setChange()">
-                <div [hidden]="firstname.valid || firstname.pristine || newUser"
+                <div [hidden]="firstname.valid || firstname.pristine || disableValidation"
                   class="alert alert-danger" style="float: left;">
                   First Name is required
                 </div>
@@ -19,7 +19,7 @@
                 <label for="lastname">Last Name</label>
                 <input type="text" class="form-control" id="lastname" required
                   [(ngModel)]="model.lastname" name="lastname" #lastname="ngModel" (change)="setChange()">
-                <div [hidden]="lastname.valid || lastname.pristine || newUser"
+                <div [hidden]="lastname.valid || lastname.pristine || disableValidation"
                   class="alert alert-danger">
                   Last Name is required
                 </div>
@@ -30,7 +30,7 @@
                 <label for="employeeid">Employee Id</label>
                 <input type="text" class="form-control" id="employeeid" required
                   [(ngModel)]="model.employeeid" name="employeeid" #employeeid="ngModel" (change)="setChange()">
-                <div [hidden]="employeeid.valid || employeeid.pristine || newUser"
+                <div [hidden]="employeeid.valid || employeeid.pristine || disableValidation"
                   class="alert alert-danger">
                   Employee Id is required
                 </div>
@@ -38,7 +38,7 @@
             </td>
           </tr>
           <tr>
-            <button type="submit" class="btn btn-success" [disabled]="(!addUserForm.form.valid)" style="width:100px;margin-right:5px">Add</button>
+            <button type="submit" class="btn btn-success" [disabled]="(!addUserForm.form.valid)" style="width:100px;margin-right:5px">{{actionName}}</button>
             <button type="button" style="width:100px;" class="btn btn-default" (click)="resetUser()">Reset</button>
           </tr>
         </table>

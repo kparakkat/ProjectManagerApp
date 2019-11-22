@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { UserService } from 'src/app/Shared/user.service';
 import { Router } from '@angular/router';
 import { User } from 'src/app/Shared/user';
@@ -9,13 +9,15 @@ import { User } from 'src/app/Shared/user';
   styleUrls: ['./viewuser.component.css']
 })
 export class ViewuserComponent implements OnInit {
-
-  constructor(public userservice:UserService, private router:Router) { }
   users: User[];
   filteredUsers: User[];
   errorMessage: string;
   _searchText: string;
+  deleteStatus: any;
+  @Output() editUser = new EventEmitter(); 
 
+  constructor(public userservice:UserService, private router:Router) { }
+  
   get searchText(): string{
     return this._searchText;
   }
@@ -41,13 +43,26 @@ export class ViewuserComponent implements OnInit {
   }
 
   ngOnInit() : void {
+    this.getAllUsers();
+  }
+
+  onEditUser(userId: string)
+  {
+    this.editUser.emit(userId);
+  }
+
+  onDeleteUser(userId: string)
+  {
+    this.userservice.deleteUser(Number(userId)).subscribe( data => {this.deleteStatus = data.response;this.getAllUsers();});
+  }
+
+  public getAllUsers() : void {
     this.userservice.getAllUsers().subscribe( 
-      users => {
-          this.users = users;
+      usersdata => {
+          this.users = usersdata;
           this.filteredUsers = this.users;
       },
       error => this.errorMessage = <any> error
     );
   }
-
 }
