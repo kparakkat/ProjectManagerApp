@@ -1,0 +1,8 @@
+<div class="container">
+  <div class="row">
+    <app-addproject (savedProject)='onSavedProject($event)' #addProject></app-addproject>
+  </div>
+  <div class="row">
+      <app-viewproject (editProject)='onEditProject($event)' #viewProject></app-viewproject>
+  </div>
+</div>

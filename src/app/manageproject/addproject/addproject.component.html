@@ -1,0 +1,66 @@
+<div class='card'>
+  <div class='card-body'>
+      <form (ngSubmit)="onSubmit()" #addProjectForm="ngForm">
+        <table>
+          <tr>
+            <td>
+              <div class="form-group">
+                <label for="project">Project Name</label>
+                <input type="text" class="form-control" id="project" required
+                  [(ngModel)]="model.project" name="project" #project="ngModel" (change)="setChange()">
+                <div [hidden]="project.valid || project.pristine || disableValidation"
+                  class="alert alert-danger" style="float: left;">
+                  Project Name is required
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="form-group">
+                <label for="startdate">Start Date</label>
+                <input type="date" class="form-control" id="startdate" required 
+                  [ngModel]="model.startdate | date:'yyyy-MM-dd'" (ngModelChange)="model.startdate = $event" name="startdate" 
+                  #startdate="ngModel" [min]="todayDate" (change)="setChange()">
+                <div [hidden]="startdate.valid || startdate.pristine || disableValidation"
+                  class="alert alert-danger">
+                  Start date is required
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="form-group">
+                <label for="enddate">End Date</label>
+                <input type="date" class="form-control" id="enddate" required
+                [ngModel]="model.enddate | date:'yyyy-MM-dd'" (ngModelChange)="model.enddate = $event" 
+                name="enddate" #enddate="ngModel"
+                [min]="todayDate" (change)="setChange()">
+                <div [hidden]="enddate.valid || enddate.pristine || disableValidation"
+                  class="alert alert-danger">
+                  End date is required
+                </div>
+                <div [hidden]="(enddate.value == null) || (enddate.value >= startdate.value) || disableValidation"
+                    class="alert alert-danger">
+                  End date should be greater than, or equal to, the start date
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="form-group">
+                <label for="priority">Priority</label>
+                <input type="text" class="form-control" id="priority" required
+                  [(ngModel)]="model.priority" name="priority" #priority="ngModel" (change)="setChange()">
+                <div [hidden]="priority.valid || priority.pristine || disableValidation"
+                  class="alert alert-danger">
+                  Priority is required
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <button type="submit" class="btn btn-success" [disabled]="(!addProjectForm.form.valid)" style="width:100px;margin-right:5px">{{actionName}}</button>
+            <button type="button" style="width:100px;" class="btn btn-default" (click)="resetProject()">Reset</button>
+          </tr>
+        </table>
+      </form>
+  </div>
+  {{saveStatus}}
+</div>

@@ -8,13 +8,19 @@ import { AppComponent } from './app.component';
 import { ManageuserComponent } from './manageuser/manageuser.component';
 import { AdduserComponent } from './manageuser/adduser/adduser.component';
 import { ViewuserComponent } from './manageuser/viewuser/viewuser.component';
+import { ManageprojectComponent } from './manageproject/manageproject.component';
+import { AddprojectComponent } from './manageproject/addproject/addproject.component';
+import { ViewprojectComponent } from './manageproject/viewproject/viewproject.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ManageuserComponent,
     AdduserComponent,
-    ViewuserComponent
+    ViewuserComponent,
+    ManageprojectComponent,
+    AddprojectComponent,
+    ViewprojectComponent
   ],
   imports: [
     BrowserModule,
