@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { NgbModule, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap'
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -11,6 +12,7 @@ import { ViewuserComponent } from './manageuser/viewuser/viewuser.component';
 import { ManageprojectComponent } from './manageproject/manageproject.component';
 import { AddprojectComponent } from './manageproject/addproject/addproject.component';
 import { ViewprojectComponent } from './manageproject/viewproject/viewproject.component';
+import { ModalComponent } from './modal/modal.component';
 
 @NgModule({
   declarations: [
@@ -20,16 +22,21 @@ import { ViewprojectComponent } from './manageproject/viewproject/viewproject.co
     ViewuserComponent,
     ManageprojectComponent,
     AddprojectComponent,
-    ViewprojectComponent
+    ViewprojectComponent,
+    ModalComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    NgbModule.forRoot()
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [ NgbActiveModal ],
+  bootstrap: [AppComponent],
+  entryComponents: [
+    ModalComponent
+  ]
 })
 export class AppModule { }

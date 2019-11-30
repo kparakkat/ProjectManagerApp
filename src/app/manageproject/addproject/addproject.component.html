@@ -54,13 +54,20 @@
                 </div>
               </div>
             </td>
+            <td>
+              <div class="form-group">
+                <label for="searchUser">Manager</label>
+                <button class="btn btn-lg btn-outline-primary" (click)="searchUser()">Search</button>
+              </div>
+            </td>
           </tr>
           <tr>
-            <button type="submit" class="btn btn-success" [disabled]="(!addProjectForm.form.valid)" style="width:100px;margin-right:5px">{{actionName}}</button>
+            <button type="submit" class="btn btn-success" [disabled]="(!addProjectForm.form.valid)" style="width:100px;margin-right:5px" (click)="onSubmitClick()">{{actionName}}</button>
             <button type="button" style="width:100px;" class="btn btn-default" (click)="resetProject()">Reset</button>
           </tr>
         </table>
       </form>
   </div>
   {{saveStatus}}
+  <!-- <app-modal title="About the App"></app-modal> -->
 </div>
