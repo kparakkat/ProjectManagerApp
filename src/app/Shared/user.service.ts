@@ -23,6 +23,10 @@ export class UserService {
     return this.makeRequest(`getByUserId/${userId}`);
   }
 
+  getUserByProjectId(projectId: number) : Observable<User> {
+    return this.makeRequest(`getByProjectId/${projectId}`);
+  }
+
   getAllUsers() : Observable<User[]> {
     return this.makeRequest(`getAllUsers`);
   }

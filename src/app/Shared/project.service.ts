@@ -37,6 +37,12 @@ export class ProjectService {
         catchError(this.handleError));
   }
 
+  saveProject(project: Project): Observable<Project>{
+    let url = `http://localhost:9092/project/saveProject`;
+    return this.httpClient.post<Project>(url, project, this.httpOptions).pipe(
+        catchError(this.handleError));
+  }
+
   editProject(project: Project): Observable<ResultData>{
     let url = `http://localhost:9092/project/updateProject`;
     return this.httpClient.put<ResultData>(url, project, this.httpOptions).pipe(

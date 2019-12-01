@@ -4,8 +4,10 @@
         <table>
           <tr>
             <td>
+                <label for="project">Project:</label>
+            </td>
+            <td colspan="3">
               <div class="form-group">
-                <label for="project">Project Name</label>
                 <input type="text" class="form-control" id="project" required
                   [(ngModel)]="model.project" name="project" #project="ngModel" (change)="setChange()">
                 <div [hidden]="project.valid || project.pristine || disableValidation"
@@ -14,13 +16,23 @@
                 </div>
               </div>
             </td>
+          </tr>
+          <tr>
+            <td colspan="2">
+              <div>
+                <input type="checkbox" id="isdaterequired" 
+                  [ngModel]="isdaterequired" name="isdaterequired" 
+                  (change)="setIsdateRequired()">
+                <label>Set Start and End Date</label>
+              </div>
+            </td>
             <td>
               <div class="form-group">
                 <label for="startdate">Start Date</label>
                 <input type="date" class="form-control" id="startdate" required 
-                  [ngModel]="model.startdate | date:'yyyy-MM-dd'" (ngModelChange)="model.startdate = $event" name="startdate" 
-                  #startdate="ngModel" [min]="todayDate" (change)="setChange()">
-                <div [hidden]="startdate.valid || startdate.pristine || disableValidation"
+                  [ngModel]="model.startdate" (ngModelChange)="model.startdate = $event" name="startdate" 
+                  #startdate="ngModel" [min]="todayDate" (change)="setChange()" [disabled]="!isdaterequired">
+                <div [hidden]="!isdaterequired || startdate.valid || startdate.pristine || disableValidation"
                   class="alert alert-danger">
                   Start date is required
                 </div>
@@ -28,46 +40,66 @@
             </td>
             <td>
               <div class="form-group">
-                <label for="enddate">End Date</label>
-                <input type="date" class="form-control" id="enddate" required
-                [ngModel]="model.enddate | date:'yyyy-MM-dd'" (ngModelChange)="model.enddate = $event" 
-                name="enddate" #enddate="ngModel"
-                [min]="todayDate" (change)="setChange()">
-                <div [hidden]="enddate.valid || enddate.pristine || disableValidation"
-                  class="alert alert-danger">
-                  End date is required
-                </div>
-                <div [hidden]="(enddate.value == null) || (enddate.value >= startdate.value) || disableValidation"
+                  <label for="enddate">End Date</label>
+                  <input type="date" class="form-control" id="enddate" required
+                  [ngModel]="model.enddate" (ngModelChange)="model.enddate = $event" 
+                  name="enddate" #enddate="ngModel" [disabled]="!isdaterequired"
+                  [min]="todayDate" (change)="setChange()">
+                  <div [hidden]="!isdaterequired || enddate.valid || enddate.pristine || disableValidation"
                     class="alert alert-danger">
-                  End date should be greater than, or equal to, the start date
+                    End date is required
+                  </div>
+                  <div [hidden]="!isdaterequired || (enddate.value == null) || (enddate.value >= startdate.value) || disableValidation"
+                      class="alert alert-danger">
+                    End date should be greater than, or equal to, the start date
+                  </div>
                 </div>
-              </div>
             </td>
+          </tr>
+          <tr>
             <td>
+                <label for="priority">Priority:</label>
+                
+            </td>
+            <td colspan="3">
               <div class="form-group">
-                <label for="priority">Priority</label>
-                <input type="text" class="form-control" id="priority" required
+                  <input type="range" class="form-control" id="priority" min="0" max="30" required
                   [(ngModel)]="model.priority" name="priority" #priority="ngModel" (change)="setChange()">
+                  <label>{{model.priority}}</label>
                 <div [hidden]="priority.valid || priority.pristine || disableValidation"
                   class="alert alert-danger">
                   Priority is required
                 </div>
               </div>
             </td>
+          </tr>
+          <tr>
+            <td>
+                <label for="searchUser">Manager:</label>
+            </td>
+            <td colspan="3">
+              <div class="form-group">
+                <input type="text" class="form-control" id="managername" required disabled
+                  [(ngModel)]="model.managername" name="managername" #managername="ngModel" (change)="setChange()">
+                <div [hidden]="managername.valid || managername.pristine || disableValidation"
+                  class="alert alert-danger" style="float: left;">
+                  Manager Name is required
+                </div>
+              </div>
+            </td>
             <td>
               <div class="form-group">
-                <label for="searchUser">Manager</label>
                 <button class="btn btn-lg btn-outline-primary" (click)="searchUser()">Search</button>
               </div>
             </td>
           </tr>
           <tr>
-            <button type="submit" class="btn btn-success" [disabled]="(!addProjectForm.form.valid)" style="width:100px;margin-right:5px" (click)="onSubmitClick()">{{actionName}}</button>
-            <button type="button" style="width:100px;" class="btn btn-default" (click)="resetProject()">Reset</button>
+            <td colspan="4" style="align-items: flex-end;">
+              <button type="submit" class="btn btn-success" [disabled]="(!addProjectForm.form.valid)" style="width:100px;margin-right:5px" (click)="onSubmitClick()">{{actionName}}</button>
+              <button type="button" style="width:100px;" class="btn btn-default" (click)="resetProject()">Reset</button>
+            </td>
           </tr>
         </table>
       </form>
   </div>
-  {{saveStatus}}
-  <!-- <app-modal title="About the App"></app-modal> -->
 </div>
