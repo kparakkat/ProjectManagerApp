@@ -2,6 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Searchdata } from '../Shared/searchdata';
 import { UserService } from '../Shared/user.service';
+import { ProjectService } from '../Shared/project.service';
+import { ParenttaskService } from '../Shared/parenttask.service';
 
 @Component({
   selector: 'app-modal',
@@ -18,7 +20,8 @@ export class ModalComponent implements OnInit {
   
   @Input() title = 'Information';
 
-  constructor(public activeModal: NgbActiveModal, public userservice:UserService) { }
+  constructor(public activeModal: NgbActiveModal, public userservice:UserService, 
+    public projectservice:ProjectService, public parenttaskservice:ParenttaskService) { }
 
   ngOnInit() {
   }
@@ -34,7 +37,15 @@ export class ModalComponent implements OnInit {
   set setModelType(value: Number){
     if (value == 1)
     {
-        this.getAllUsers();
+      this.getAllUsers();
+    }
+    else if (value == 2)
+    {
+      this.getAllProjects();
+    }
+    else if (value == 3)
+    {
+      this.getAllParentTasks();
     }
   }
 
@@ -48,6 +59,30 @@ export class ModalComponent implements OnInit {
       usersdata => {
           this.searchDataList = usersdata.map( u => {
             return {id: u.userid, name: u.firstname + " " + u.lastname}
+          });
+          this.filteredSearchDataList = this.searchDataList;
+      },
+      error => this.errorMessage = <any> error
+    );
+  }
+
+  public getAllProjects() : void {
+    this.projectservice.getAllProjects().subscribe( 
+      projectsdata => {
+          this.searchDataList = projectsdata.map( p => {
+            return {id: p.projectid, name: p.project}
+          });
+          this.filteredSearchDataList = this.searchDataList;
+      },
+      error => this.errorMessage = <any> error
+    );
+  }
+
+  public getAllParentTasks() : void {
+    this.parenttaskservice.getAllParentTasks().subscribe( 
+      parenttasksdata => {
+          this.searchDataList = parenttasksdata.map( pt => {
+            return {id: pt.parenttaskid, name: pt.parenttask}
           });
           this.filteredSearchDataList = this.searchDataList;
       },

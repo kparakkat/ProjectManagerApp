@@ -1,15 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Parenttask } from './parenttask';
 import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
-import { User } from './user';
 import { ResultData } from './resultdata';
+import { catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
-export class UserService {
-
+export class ParenttaskService {
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type':  'application/json',
@@ -19,42 +18,27 @@ export class UserService {
   
   constructor(private httpClient: HttpClient) { }
 
-  getUserById(userId: number) : Observable<User> {
-    return this.makeRequest(`getByUserId/${userId}`);
+  getByParentTaskId(id: number) : Observable<Parenttask> {
+    return this.makeRequest(`getByParentTaskId/${id}`);
   }
 
-  getUserByProjectId(projectId: number) : Observable<User> {
-    return this.makeRequest(`getByProjectId/${projectId}`);
-  }
-
-  getUserByTaskId(taskId: number) : Observable<User> {
-    return this.makeRequest(`getByTaskId/${taskId}`);
-  }
-
-  getAllUsers() : Observable<User[]> {
-    return this.makeRequest(`getAllUsers`);
+  getAllParentTasks() : Observable<Parenttask[]> {
+    return this.makeRequest(`getAllParentTasks`);
   }
   
   private makeRequest(path: string): Observable<any> {
-    let url = `http://localhost:9092/user/${path}`;
+    let url = `http://localhost:9092/parentTask/${path}`;
     return this.httpClient.get<any>(url);
   }
 
-  addUser(user: User): Observable<ResultData>{
-    let url = `http://localhost:9092/user/addUser`;
-    // return this.httpClient.post<User>(url, user, this.httpOptions);
-    return this.httpClient.post<ResultData>(url, user, this.httpOptions).pipe(
+  saveParentTask(parentTask: Parenttask): Observable<Parenttask>{
+    let url = `http://localhost:9092/parentTask/saveParentTask`;
+    return this.httpClient.post<Parenttask>(url, parentTask, this.httpOptions).pipe(
         catchError(this.handleError));
   }
 
-  editUser(user: User): Observable<ResultData>{
-    let url = `http://localhost:9092/user/updateUser`;
-    return this.httpClient.put<ResultData>(url, user, this.httpOptions).pipe(
-        catchError(this.handleError));
-  }
-
-  deleteUser(userId: Number): Observable<ResultData>{
-    let url = `http://localhost:9092/user/deleteUser/${userId}`;
+  deleteParentTask(id: Number): Observable<ResultData>{
+    let url = `http://localhost:9092/parentTask/deleteParentTask/${id}`;
     return this.httpClient.delete<ResultData>(url).pipe(
         catchError(this.handleError));
   }
@@ -74,5 +58,4 @@ export class UserService {
     return throwError(
       'Something bad happened; please try again later.');
   }
-
 }

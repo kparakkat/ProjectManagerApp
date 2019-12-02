@@ -13,6 +13,8 @@ import { ManageprojectComponent } from './manageproject/manageproject.component'
 import { AddprojectComponent } from './manageproject/addproject/addproject.component';
 import { ViewprojectComponent } from './manageproject/viewproject/viewproject.component';
 import { ModalComponent } from './modal/modal.component';
+import { AddtaskComponent } from './addtask/addtask.component';
+import { ViewtaskComponent } from './viewtask/viewtask.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,9 @@ import { ModalComponent } from './modal/modal.component';
     ManageprojectComponent,
     AddprojectComponent,
     ViewprojectComponent,
-    ModalComponent
+    ModalComponent,
+    AddtaskComponent,
+    ViewtaskComponent
   ],
   imports: [
     BrowserModule,

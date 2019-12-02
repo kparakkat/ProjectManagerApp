@@ -1,7 +1,6 @@
 import { Component, OnInit, Output, EventEmitter, NgModuleRef } from '@angular/core';
 import { Project } from 'src/app/Shared/project';
 import { ProjectService } from 'src/app/Shared/project.service';
-import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalComponent } from 'src/app/modal/modal.component';
 import { UserService } from 'src/app/Shared/user.service';
@@ -26,7 +25,7 @@ export class AddprojectComponent implements OnInit {
   managerid: Number;
   selectedManagerid: Number;
   @Output() savedProject = new EventEmitter(); 
-  constructor(public projectservice:ProjectService, private router:Router, private modalService: NgbModal, public userservice:UserService) { }
+  constructor(public projectservice:ProjectService, private modalService: NgbModal, public userservice:UserService) { }
 
   ngOnInit() {
     let today = new Date((new Date().getTime() - 24 * 60 * 60 * 1000));
@@ -110,7 +109,6 @@ export class AddprojectComponent implements OnInit {
   setIsdateRequired(): void{
     if (this.isdaterequired) { this.isdaterequired = false;}
     else {this.isdaterequired = true;}
-
   }
 
   public editProject(projectId: string) : void
@@ -153,7 +151,7 @@ export class AddprojectComponent implements OnInit {
     modalRef.result.then((result) => { 
           this.closeResult =  `${result}`;
           if (this.closeResult != 'Close') {
-            let managerDetails  = this.closeResult.split(",");
+            let managerDetails  = this.closeResult.split("~");
             this.selectedManagerid = +managerDetails[0];
             this.model.managername = managerDetails[1];
           }

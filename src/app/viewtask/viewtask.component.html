@@ -1,0 +1,40 @@
+<div class='card'>
+    <div class='card-body'>
+      <div class='row'>
+          <div class='col-md-12'>
+              <input type='text' 
+                [(ngModel)]='projectName' disabled/> 
+                <button class="btn btn-lg btn-outline-primary" (click)="searchProject()">Search</button>
+                Sort:
+                <button type="button" style="width:130px" class="btn btn-success" (click)="sort('StartDate')">Start Date</button>
+                <button type="button" style="width:130px;margin-left: 1px;" class="btn btn-success" (click)="sort('EndDate')">End Date</button>
+                <button type="button" style="width:100px;margin-left: 1px;" class="btn btn-success" (click)="sort('Priority')">Priority</button>
+          </div>
+      </div>
+      <div class='table-responsive'>
+          <table class='table'
+          *ngIf='tasks && tasks.length'>
+            <thead>
+                <tr>
+                    <th>Task</th>
+                    <th>Priority</th>
+                    <th>Start</th>
+                    <th>End</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor='let task of tasks'>
+                    <td>{{ task.task }}</td>
+                    <td>{{ task.priority }}</td>
+                    <td>{{ task.startdate | date:'shortDate' }}</td>
+                    <td>{{ task.enddate | date:'shortDate' }}</td>
+                    <td><button type="button" style="width:100px;" class="btn btn-success" (click)="onEditTask(task.taskid)">Edit</button></td>
+                    <td><button type="button" style="width:100px;" class="btn btn-success" (click)="onEndTask(project.taskid)">End Task</button></td>
+                </tr>
+            </tbody>
+          </table>
+      </div>
+    </div>
+  </div>  

@@ -1,0 +1,154 @@
+<div class='card'>
+  <div class='card-body'>
+      <form (ngSubmit)="onSubmit()" #addTaskForm="ngForm">
+        <table>
+          <tr>
+            <td colspan="2">
+                <label for="searchProject">Project:</label>
+            </td>
+            <td colspan="6">
+              <div class="form-group">
+                <input type="text" class="form-control" id="projectname" required disabled
+                  [(ngModel)]="model.projectname" name="projectname" #projectname="ngModel" (change)="setChange()">
+                <div [hidden]="isparenttask || projectname.valid || projectname.pristine || disableValidation"
+                  class="alert alert-danger" style="float: left;">
+                  Project is required
+                </div>
+              </div>
+            </td>
+            <td colspan="1">
+              <div class="form-group">
+                <button class="btn btn-lg btn-outline-primary" (click)="searchProject()" [disabled]="isparenttask">Search</button>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2">
+                <label for="task">Task:</label>
+            </td>
+            <td colspan="6">
+              <div class="form-group">
+                <input type="text" class="form-control" id="task" required
+                  [(ngModel)]="model.task" name="task" #task="ngModel" (change)="setChange()">
+                <div [hidden]="task.valid || task.pristine || disableValidation"
+                  class="alert alert-danger" style="float: left;">
+                  Task Name is required
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2"></td>
+            <td colspan="6">
+              <div>
+                <input type="checkbox" id="isparenttask" 
+                  [ngModel]="isparenttask" name="isparenttask" 
+                  (change)="setIsParentTask()">
+                <label>Parent Task</label>
+              </div>
+            </td>
+          </tr>
+          <tr>
+              <td colspan="2">
+                  <label for="priority">Priority:</label>
+              </td>
+              <td colspan="6">
+                <div class="form-group">
+                    <input type="range" class="form-control" id="priority" min="0" max="30" required [disabled]="isparenttask"
+                    [(ngModel)]="model.priority" name="priority" #priority="ngModel" (change)="setChange()">
+                    <label>{{model.priority}}</label>
+                  <div [hidden]="isparenttask || priority.valid || priority.pristine || disableValidation"
+                    class="alert alert-danger">
+                    Priority is required
+                  </div>
+                </div>
+              </td>
+          </tr>
+          <tr>
+            <td colspan="2">
+                <label for="searchParentTask">Parent Task:</label>
+            </td>
+            <td colspan="6">
+              <div class="form-group">
+                <input type="text" class="form-control" id="parenttaskname" required disabled
+                  [(ngModel)]="model.parenttaskname" name="parenttaskname" #parenttaskname="ngModel" (change)="setChange()">
+                <div [hidden]="isparenttask || parenttaskname.valid || parenttaskname.pristine || disableValidation"
+                  class="alert alert-danger" style="float: left;">
+                  Parent Task is required
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="form-group">
+                <button class="btn btn-lg btn-outline-primary" (click)="searchParentTask()" [disabled]="isparenttask">Search</button>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2">
+              <label for="startdate">Start Date:</label>
+            </td>
+            <td colspan="2">
+              <div class="form-group">
+                
+                <input type="date" class="form-control" id="startdate" required 
+                  [ngModel]="model.startdate" (ngModelChange)="model.startdate = $event" name="startdate" 
+                  #startdate="ngModel" [min]="todayDate" (change)="setChange()" [disabled]="isparenttask">
+                <div [hidden]="isparenttask || startdate.valid || startdate.pristine || disableValidation"
+                  class="alert alert-danger">
+                  Start date is required
+                </div>
+              </div>
+            </td>
+            <td colspan="2">
+                <label for="enddate">End Date:</label>
+            </td>
+            <td colspan="2">
+              <div class="form-group">
+                  <input type="date" class="form-control" id="enddate" required
+                  [ngModel]="model.enddate" (ngModelChange)="model.enddate = $event" 
+                  name="enddate" #enddate="ngModel" [disabled]="isparenttask"
+                  [min]="todayDate" (change)="setChange()">
+                  <div [hidden]="isparenttask || enddate.valid || enddate.pristine || disableValidation"
+                    class="alert alert-danger">
+                    End date is required
+                  </div>
+                  <div [hidden]="isparenttask || (enddate.value == null) || (enddate.value >= startdate.value) || disableValidation"
+                      class="alert alert-danger">
+                    End date should be greater than, or equal to, the start date
+                  </div>
+                </div>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2">
+                <label for="searchUser">User:</label>
+            </td>
+            <td colspan="6">
+              <div class="form-group">
+                <input type="text" class="form-control" id="username" required disabled
+                  [(ngModel)]="model.username" name="username" #username="ngModel" (change)="setChange()">
+                <div [hidden]="isparenttask || username.valid || username.pristine || disableValidation"
+                  class="alert alert-danger" style="float: left;">
+                  User Name is required
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="form-group">
+                <button class="btn btn-lg btn-outline-primary" (click)="searchUser()" [disabled]="isparenttask">Search</button>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="4"></td>
+            <td colspan="4" style="align-items: flex-end;">
+              <button type="submit" class="btn btn-success" [disabled]="(!addTaskForm.form.valid)" style="width:100px;margin-right:5px" (click)="onSubmitClick()">{{actionName}}</button>
+              <button type="button" style="width:100px;" class="btn btn-default" (click)="clearForm()">Cancel</button>
+            </td>
+          </tr>
+        </table>
+      </form>
+  </div>
+  {{saveStatus}}
+</div>
