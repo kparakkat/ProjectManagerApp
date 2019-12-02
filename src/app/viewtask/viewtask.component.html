@@ -2,13 +2,25 @@
     <div class='card-body'>
       <div class='row'>
           <div class='col-md-12'>
-              <input type='text' 
-                [(ngModel)]='projectName' disabled/> 
-                <button class="btn btn-lg btn-outline-primary" (click)="searchProject()">Search</button>
-                Sort:
-                <button type="button" style="width:130px" class="btn btn-success" (click)="sort('StartDate')">Start Date</button>
-                <button type="button" style="width:130px;margin-left: 1px;" class="btn btn-success" (click)="sort('EndDate')">End Date</button>
-                <button type="button" style="width:100px;margin-left: 1px;" class="btn btn-success" (click)="sort('Priority')">Priority</button>
+            <table>
+                <tr>
+                    <td> 
+                        <input type='text' [(ngModel)]='projectName' style="width:370px;" disabled/> 
+                    </td>
+                    <td>
+                        <button class="btn btn-lg btn-outline-primary" (click)="searchProject()">Search</button>
+                    </td>
+                    <td>
+                        <label for="Sort">Sort Task By:</label>
+                    </td>
+                    <td>
+                        <button type="button" style="width:130px" class="btn btn-success" (click)="sort('StartDate')">Start Date</button>
+                        <button type="button" style="width:130px;margin-left: 1px;" class="btn btn-success" (click)="sort('EndDate')">End Date</button>
+                        <button type="button" style="width:100px;margin-left: 1px;" class="btn btn-success" (click)="sort('Priority')">Priority</button>
+                        <button type="button" style="width:120px;margin-left: 1px;" class="btn btn-success" (click)="sort('Status')">Completed</button>
+                    </td>
+                </tr>
+            </table>
           </div>
       </div>
       <div class='table-responsive'>
@@ -17,6 +29,7 @@
             <thead>
                 <tr>
                     <th>Task</th>
+                    <th>Parent</th>
                     <th>Priority</th>
                     <th>Start</th>
                     <th>End</th>
@@ -27,6 +40,7 @@
             <tbody>
                 <tr *ngFor='let task of tasks'>
                     <td>{{ task.task }}</td>
+                    <td>{{ task.parenttaskname }}</td>
                     <td>{{ task.priority }}</td>
                     <td>{{ task.startdate | date:'shortDate' }}</td>
                     <td>{{ task.enddate | date:'shortDate' }}</td>

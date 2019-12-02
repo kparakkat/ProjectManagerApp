@@ -28,6 +28,7 @@ export class AddprojectComponent implements OnInit {
   constructor(public projectservice:ProjectService, private modalService: NgbModal, public userservice:UserService) { }
 
   ngOnInit() {
+    this.model.priority = 1;
     let today = new Date((new Date().getTime() - 24 * 60 * 60 * 1000));
     this.todayDate = today.toISOString().slice(0,10);
     this.clearManagerId();
@@ -68,6 +69,7 @@ export class AddprojectComponent implements OnInit {
   clearForm() : void{
     this.submitted = false; 
     this.model = new Project();
+    this.model.priority = 1;
     this.disableValidation = true;
     this.actionName = "Add"
     this.clearManagerId();

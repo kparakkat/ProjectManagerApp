@@ -2,6 +2,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Project } from 'src/app/Shared/project';
 import { ProjectService } from 'src/app/Shared/project.service';
 import { Router } from '@angular/router';
+import { TaskService } from 'src/app/Shared/task.service';
 
 @Component({
   selector: 'app-viewproject',
@@ -17,7 +18,7 @@ export class ViewprojectComponent implements OnInit {
   deleteStatus: any;
   @Output() editProject = new EventEmitter(); 
 
-  constructor(public projectservice:ProjectService, private router:Router) { }
+  constructor(public projectservice:ProjectService, private router:Router, public taskservice:TaskService) { }
   
   get searchText(): string{
     return this._searchText;
@@ -39,6 +40,8 @@ export class ViewprojectComponent implements OnInit {
       this.filteredProjects = this.projects.sort( (a,b) => a.enddate < b.enddate ? -1 : a.enddate > b.enddate ? 1: 0);
     else if (sortBy == 'Priority')
       this.filteredProjects = this.projects.sort( (a,b) => a.priority < b.priority ? -1 : a.priority > b.priority ? 1: 0);
+    else if (sortBy == 'Completed')
+    this.filteredProjects = this.projects.sort( (a,b) => a.completed < b.completed ? -1 : a.completed > b.completed ? 1: 0);
   }
 
   ngOnInit() : void {
@@ -60,6 +63,28 @@ export class ViewprojectComponent implements OnInit {
       projectsdata => {
           this.projects = projectsdata;
           this.filteredProjects = this.projects;
+          for(let project of this.projects)
+          {
+              this.taskservice.getTasksByProjectId(Number(project.projectid)).subscribe(
+                tasks => {
+                    project.numberoftasks = tasks.length;
+                    let completedStatus:Boolean = true;
+                    for(let task of tasks)
+                    {
+                        if (task.status != "Completed")
+                          {
+                            completedStatus = false;
+                            break;
+                          }
+                    }
+                    if (completedStatus)
+                      project.completed = "Yes";
+                    else
+                      project.completed = "No";
+                }
+              );
+
+          }
       },
       error => this.errorMessage = <any> error
     );

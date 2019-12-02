@@ -47,7 +47,7 @@ export class AddtaskComponent implements OnInit {
     // Intitalizing today's date
     let today = new Date((new Date().getTime() - 24 * 60 * 60 * 1000));
     this.todayDate = today.toISOString().slice(0,10);
-    this.model.priority = 0;
+    this.model.priority = 1;
   }
 
   onSubmit() {
@@ -124,7 +124,7 @@ export class AddtaskComponent implements OnInit {
   // This method clear the form values after save
   clearForm() : void{
     this.model = new Task();
-    this.model.priority = 0;
+    this.model.priority = 1;
     this.disableValidation = true;
     this.submitted = false;
     this.actionName ="Add";

@@ -4,6 +4,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TaskService } from '../Shared/task.service';
 import { ModalComponent } from '../modal/modal.component';
 import { Router } from '@angular/router';
+import { ParenttaskService } from '../Shared/parenttask.service';
 
 @Component({
   selector: 'app-viewtask',
@@ -17,8 +18,9 @@ export class ViewtaskComponent implements OnInit {
   projectId: Number;
   closeResult: String;
   errorMessage: string;
-  constructor(private modalService: NgbModal,
-    public taskservice:TaskService, private router:Router) { }
+  deleteStatus: string;
+  constructor(private modalService: NgbModal, public taskservice:TaskService, 
+    public parenttaskservice: ParenttaskService ,private router:Router) { }
 
   ngOnInit() {
   }
@@ -29,7 +31,9 @@ export class ViewtaskComponent implements OnInit {
     else if (sortBy == 'EndDate')
       this.tasks = this.tasks.sort( (a,b) => a.enddate < b.enddate ? -1 : a.enddate > b.enddate ? 1: 0);
     else if (sortBy == 'Priority')
-    this.tasks = this.tasks.sort( (a,b) => a.priority < b.priority ? -1 : a.priority > b.priority ? 1: 0);
+      this.tasks = this.tasks.sort( (a,b) => a.priority < b.priority ? -1 : a.priority > b.priority ? 1: 0);
+    else if (sortBy == 'Status')  
+      this.tasks = this.tasks.sort( (a,b) => a.status < b.status ? -1 : a.status > b.status ? 1: 0);
   }
 
   // Search for the project using modal popup
@@ -57,10 +61,35 @@ export class ViewtaskComponent implements OnInit {
     this.router.navigate([`/editTask/${editTaskId}`]);
   }
 
+  onEndTask(taskId: String)
+  {
+    let endTaskId = Number(taskId);
+    this.taskservice.getTaskById(Number(endTaskId)).subscribe( 
+      task => {
+          task.status = "Completed";
+          task.priority = 0;
+          this.taskservice.saveTask(task).subscribe(
+            updatedTask => {
+                this.deleteStatus = "Completed";
+            }
+          );
+      },
+      error => this.errorMessage = <any> error
+    );
+  }
+
   public getTasksByProjectId(projectId: Number) : void {
     this.taskservice.getTasksByProjectId(Number(projectId)).subscribe( 
       tasksdata => {
           this.tasks = tasksdata;
+          for (let task of this.tasks)
+          {
+            this.parenttaskservice.getByParentTaskId(Number(task.parenttaskid)).subscribe(
+              parenttaskdata => {
+                task.parenttaskname = parenttaskdata.parenttask;
+              }
+            );
+          }
       },
       error => this.errorMessage = <any> error
     );

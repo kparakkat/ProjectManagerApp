@@ -8,6 +8,7 @@
               <button type="button" style="width:130px" class="btn btn-success" (click)="sort('StartDate')">Start Date</button>
               <button type="button" style="width:130px;margin-left: 1px;" class="btn btn-success" (click)="sort('EndDate')">End Date</button>
               <button type="button" style="width:100px;margin-left: 1px;" class="btn btn-success" (click)="sort('Priority')">Priority</button>
+              <button type="button" style="width:120px;margin-left: 1px;" class="btn btn-success" (click)="sort('Completed')">Completed</button>
         </div>
     </div>
     <div class='table-responsive'>
@@ -16,8 +17,10 @@
           <thead>
               <tr>
                   <th>Project Name</th>
-                  <th>Start Date</th>
-                  <th>End Date</th>
+                  <th>No. of Tasks</th>
+                  <th>Completed</th>
+                  <th>Start</th>
+                  <th>End</th>
                   <th>Priority</th>
                   <th></th>
                   <th></th>
@@ -26,11 +29,13 @@
           <tbody>
               <tr *ngFor='let project of filteredProjects'>
                   <td>{{ project.project }}</td>
+                  <td>{{ project.numberoftasks }}</td>
+                  <td>{{ project.completed }}</td>
                   <td>{{ project.startdate | date:'shortDate' }}</td>
                   <td>{{ project.enddate | date:'shortDate' }}</td>
                   <td>{{ project.priority }}</td>
-                  <td><button type="button" style="width:100px;" class="btn btn-success" (click)="onEditProject(project.projectid)">Edit</button></td>
-                  <td><button type="button" style="width:100px;" class="btn btn-success" (click)="onDeleteProject(project.projectid)">Delete</button></td>
+                  <td><button type="button" style="width:100px;" class="btn btn-success" (click)="onEditProject(project.projectid)">Update</button></td>
+                  <td><button type="button" style="width:100px;" class="btn btn-success" (click)="onDeleteProject(project.projectid)">Suspend</button></td>
               </tr>
           </tbody>
         </table>

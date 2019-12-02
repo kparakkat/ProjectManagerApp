@@ -7,6 +7,8 @@ export class Project {
         public startdate?: Date,
         public enddate?: Date,
         public priority?: number,
-        public managername?: string
+        public managername?: string,
+        public numberoftasks: number = 0,
+        public completed: string ="No"
     ) {}
 }
